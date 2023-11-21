@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuarios {
+  id       Int      @id @default(autoincrement())
+  image    String?
+  nome     String
+  email    String   @unique
+  password String
+  typeUser TypeUser
+
+  created_at   DateTime?      @default(now())
+  updated_at   DateTime?      @default(now())
+  profissional Profissional[]
+  pacientes    Pacientes[]
+}
+
+enum TypeUser {
+  PACIENTE
+  PROFISSIONAL
+}
+
+model Profissional {
+  id        Int        @id @default(autoincrement())
+  nome      String
+  email     String     @unique
+  documento String?    @unique
+  telefone  String?
+  nota      Int?       @default(5)
+  enderecos Enderecos? @relation(fields: [endereco_id], references: [id])
+
+  endereco_id         Int?              @unique
+  typeProfissional    TypeProfissional? @relation(fields: [typeProfissional_id], references: [id])
+  typeProfissional_id Int?
+
+  created_at DateTime?   @default(now())
+  updated_at DateTime?   @default(now())
+  usuarios   Usuarios?   @relation(fields: [usuario_id], references: [id])
+  usuario_id Int
+  mensagens  Mensagens[]
+
+  conProfissionalPacientes ConProfissionalPacientes[]
+}
+
+model TypeProfissional {
+  id           Int            @id @default(autoincrement())
+  nome         String
+  created_at   DateTime?      @default(now())
+  updated_at   DateTime?      @default(now())
+  Profissional Profissional[]
+}
+
+model Pacientes {
+  id          Int       @id @default(autoincrement())
+  nome        String
+  email       String    @unique
+  documento   String?   @unique
+  telefone    String?
+  estadoCivil String?
+  sexo        String?
+  usuarios    Usuarios? @relation(fields: [usuario_id], references: [id])
+  usuario_id  Int
+
+  endereco_id Int? @unique
+
+  enderecos Enderecos? @relation(fields: [endereco_id], references: [id])
+
+  conProfissionalPacientes ConProfissionalPacientes[]
+  created_at               DateTime?                  @default(now())
+  updated_at               DateTime?                  @default(now())
+  Mensagens                Mensagens[]
+}
+
+model ConProfissionalPacientes {
+  id Int @id @default(autoincrement())
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  profissional_id Int
+  pacientes       Pacientes    @relation(fields: [paciente_id], references: [id])
+  paciente_id     Int
+  prontuarios     Prontuarios  @relation(fields: [prontuario_id], references: [id])
+  prontuario_id   Int          @unique
+}
+
+model Enderecos {
+  id          Int     @id @default(autoincrement())
+  rua         String
+  bairro      String
+  cidade      String
+  estado      String
+  pais        String?
+  complemento String?
+  numero      String?
+
+  profissional Profissional?
+  pacientes    Pacientes?
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model Prontuarios {
+  id        Int       @id @default(autoincrement())
+  descricao String
+  status    String
+  horario   DateTime? @default(now())
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  conProfissionalPacientes ConProfissionalPacientes[]
+}
+
+model Mensagens {
+  id              Int          @id @default(autoincrement())
+  conteudo        String
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  pacientes       Pacientes    @relation(fields: [paciente_id], references: [id])
+  profissional_id Int
+  paciente_id     Int
+  usuarioID       Int
+  created_at      DateTime?    @default(now())
+  updated_at      DateTime?    @default(now())
+}
