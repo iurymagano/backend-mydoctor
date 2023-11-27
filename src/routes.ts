@@ -14,6 +14,8 @@ import { DeleteEnderecosController } from "./controllers/Enderecos/DeleteEnderec
 import { GetIDEnderecosController } from "./controllers/Enderecos/GetIDEnderecosController";
 import { CreateMensagensController } from "./controllers/Mensagens/CreateMensagensController";
 import { SendEmailController } from "./controllers/SendEmailController/SendEmailController";
+import { UploadCloudinaryController } from "./controllers/UploadCloudinary/UploadCloudinaryController";
+import { upload } from "./config/multer";
 
 const router = Router();
 
@@ -91,5 +93,13 @@ router.post(
 
 /**------ SendEmail ------- */
 router.post("/sendemail", isAuthenticated, new SendEmailController().handle);
+
+/**------ Upload Images ------- */
+router.post(
+  "/images/upload",
+  isAuthenticated,
+  upload.single("file"),
+  new UploadCloudinaryController().handle
+);
 
 export { router };

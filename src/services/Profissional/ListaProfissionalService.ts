@@ -10,5 +10,4 @@ class ListaProfissionalService {
     return { respData: profissional };
   }
 }
-
 export { ListaProfissionalService };
