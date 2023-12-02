@@ -8,7 +8,6 @@ interface UploadCloudinaryRequest {
 
 class UploadCloudinaryService {
   async execute({ file, publicID }: UploadCloudinaryRequest) {
-    console.log(file, "service");
     if (!file) {
       throw new Error("File não existente");
     }

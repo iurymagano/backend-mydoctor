@@ -12,8 +12,6 @@ datasource db {
 
 model Usuarios {
   id       Int      @id @default(autoincrement())
-  image    String?
-  nome     String
   email    String   @unique
   password String
   typeUser TypeUser
@@ -32,6 +30,7 @@ enum TypeUser {
 model Profissional {
   id        Int        @id @default(autoincrement())
   nome      String
+  image     String?
   email     String     @unique
   documento String?    @unique
   telefone  String?
@@ -62,6 +61,7 @@ model TypeProfissional {
 model Pacientes {
   id          Int       @id @default(autoincrement())
   nome        String
+  image       String?
   email       String    @unique
   documento   String?   @unique
   telefone    String?

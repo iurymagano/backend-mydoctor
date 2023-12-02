@@ -1,19 +1,17 @@
 import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
-import { CreatePacientesService } from "../Pacientes/CreatePacientesService";
-import { CreateProfissionalService } from "../Profissional/CreateProfissionalService";
+import { CreatePacientesService } from "../pacientes/CreatePacientesService";
+import { CreateProfissionalService } from "../profissional/CreateProfissionalService";
 
 interface UserRequest {
   nome: string;
   email: string;
   password: string;
   typeUser: "PACIENTE" | "PROFISSIONAL";
-  image?: string;
 }
 
 class CreateUsuarioService {
-  async execute({ nome, email, typeUser, password, image }: UserRequest) {
-    console.log(email);
+  async execute({ nome, email, typeUser, password }: UserRequest) {
     const typesIsRequired = ["PROFISSIONAL", "PACIENTE"];
     if (!email) {
       throw new Error("Email é Obrigátorio");
@@ -46,13 +44,9 @@ class CreateUsuarioService {
         email,
         password: passwordHash,
         typeUser,
-        nome,
-        image,
       },
       select: {
         id: true,
-        nome: true,
-        image: true,
         email: true,
         typeUser: true,
       },

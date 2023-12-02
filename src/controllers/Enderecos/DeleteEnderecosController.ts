@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteEnderecosService } from "../../services/Enderecos/DeleteEnderecosService";
+import { DeleteEnderecosService } from "../../services/enderecos/DeleteEnderecosService";
 
 class DeleteEnderecosController {
   async handle(req: Request, res: Response) {

@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import { upload } from "./config/multer";
 import { CreateUsuarioController } from "./controllers/usuarios/CreateUsuarioController";
 import { AuthController } from "./controllers/usuarios/AuthController";
 import { isAuthenticated } from "./middlewares/IsAuthticated";
@@ -8,19 +9,22 @@ import { CreateProntuariosController } from "./controllers/Prontuarios/CreatePro
 import { UpdateProntuariosController } from "./controllers/Prontuarios/UpdateProntuariosController";
 import { ListaProfissionalController } from "./controllers/Prontuarios/ListaProfissionalController";
 import { DeleteProntuariosController } from "./controllers/Prontuarios/DeleteProntuariosController";
-import { CreateEnderecosController } from "./controllers/Enderecos/CreateEnderecosController";
-import { UpdateEnderecosController } from "./controllers/Enderecos/UpdateEnderecosController";
-import { DeleteEnderecosController } from "./controllers/Enderecos/DeleteEnderecosController";
-import { GetIDEnderecosController } from "./controllers/Enderecos/GetIDEnderecosController";
-import { CreateMensagensController } from "./controllers/Mensagens/CreateMensagensController";
-import { SendEmailController } from "./controllers/SendEmailController/SendEmailController";
-import { UploadCloudinaryController } from "./controllers/UploadCloudinary/UploadCloudinaryController";
-import { upload } from "./config/multer";
+import { CreateEnderecosController } from "./controllers/enderecos/CreateEnderecosController";
+import { UpdateEnderecosController } from "./controllers/enderecos/UpdateEnderecosController";
+import { DeleteEnderecosController } from "./controllers/enderecos/DeleteEnderecosController";
+import { GetIDEnderecosController } from "./controllers/enderecos/GetIDEnderecosController";
+import { CreateMensagensController } from "./controllers/mensagens/CreateMensagensController";
+import { SendEmailController } from "./controllers/sendEmailController/SendEmailController";
+import { UploadCloudinaryController } from "./controllers/uploadCloudinary/UploadCloudinaryController";
+import { UpdateUsuarioControler } from "./controllers/usuarios/UpdateUsuarioController";
+import { UpdatePacientesController } from "./controllers/pacientes/UpdatePacientesController";
+import { GetByPacientesController } from "./controllers/pacientes/GetByPacientesController";
 
 const router = Router();
 
 /**------ Usuarios ------- */
 router.post("/usuario", new CreateUsuarioController().handle);
+router.put("/usuario", isAuthenticated, new UpdateUsuarioControler().handle);
 
 /**------ login ------- */
 router.post("/login", new AuthController().handle);
@@ -36,6 +40,18 @@ router.put(
   "/profissional",
   isAuthenticated,
   new UpdateProfissionalController().handle
+);
+
+/**------ Pacientes ------- */
+router.put(
+  "/pacientes",
+  isAuthenticated,
+  new UpdatePacientesController().handle
+);
+router.post(
+  "/search/id/pacientes",
+  isAuthenticated,
+  new GetByPacientesController().handle
 );
 
 /**------ Prontuarios ------- */

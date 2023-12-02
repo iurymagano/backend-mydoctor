@@ -29,7 +29,6 @@ class AuthUsuarioservice {
 
     const token = sign(
       {
-        nome: user.nome,
         email: user.email,
       },
       process.env.JWT_SECRET,
@@ -40,9 +39,7 @@ class AuthUsuarioservice {
     );
     const data = {
       id: user.id,
-      nome: user.nome,
       email: user.email,
-      image: user.image,
       typeUser: user.typeUser,
       token,
     };

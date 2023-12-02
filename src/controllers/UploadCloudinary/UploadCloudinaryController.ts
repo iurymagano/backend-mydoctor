@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UploadCloudinaryService } from "../../services/UploadCloudinary/UploadCloudinaryService";
+import { UploadCloudinaryService } from "../../services/uploadCloudinary/UploadCloudinaryService";
 
 class UploadCloudinaryController {
   async handle(req: Request, res: Response) {

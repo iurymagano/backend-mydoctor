@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateEnderecosService } from "../../services/Enderecos/UpdateEnderecosService";
+import { UpdateEnderecosService } from "../../services/enderecos/UpdateEnderecosService";
 
 class UpdateEnderecosController {
   async handle(req: Request, res: Response) {

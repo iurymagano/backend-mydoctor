@@ -1,6 +1,6 @@
 import prismaClient from "../../prisma";
 
-interface Profissional {
+interface Pacientes {
   id: number;
   nome?: string;
   email?: string;
@@ -8,11 +8,9 @@ interface Profissional {
   documento?: string;
   telefone?: string;
   endereco_id?: number;
-  usuario_id?: number;
-  typeProfissional_id?: number;
 }
 
-class UpdateProfissionalService {
+class UpdatePacientesService {
   async execute({
     id,
     nome,
@@ -21,9 +19,8 @@ class UpdateProfissionalService {
     documento,
     telefone,
     endereco_id,
-    typeProfissional_id,
-  }: Profissional) {
-    const keys: Profissional = {
+  }: Pacientes) {
+    const keys: Pacientes = {
       id,
       nome,
       image,
@@ -31,7 +28,6 @@ class UpdateProfissionalService {
       documento,
       telefone,
       endereco_id,
-      typeProfissional_id,
     };
 
     const data = {};
@@ -42,17 +38,17 @@ class UpdateProfissionalService {
       }
     });
 
-    const existProf = await prismaClient.profissional.findFirst({
+    const existPaciente = await prismaClient.pacientes.findFirst({
       where: {
         id,
       },
     });
 
-    if (!existProf) {
+    if (!existPaciente) {
       throw new Error("Profissional nao encontrado");
     }
 
-    const profissinal = await prismaClient.profissional.update({
+    const profissinal = await prismaClient.pacientes.update({
       where: {
         id,
       },
@@ -63,4 +59,4 @@ class UpdateProfissionalService {
   }
 }
 
-export { UpdateProfissionalService };
+export { UpdatePacientesService };

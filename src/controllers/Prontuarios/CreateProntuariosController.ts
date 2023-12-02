@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateProntuariosService } from "../../services/Prontuarios/CreateProntuariosService";
+import { CreateProntuariosService } from "../../services/prontuarios/CreateProntuariosService";
 
 class CreateProntuariosController {
   async handle(req: Request, res: Response) {

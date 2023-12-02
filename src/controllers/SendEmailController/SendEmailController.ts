@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { SendEmailService } from "../../services/SendEmail/SendEmailService";
+import { SendEmailService } from "../../services/sendEmail/SendEmailService";
 
 class SendEmailController {
   handle(req: Request, res: Response) {

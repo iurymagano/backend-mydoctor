@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { GetIDEnderecosService } from "../../services/Enderecos/GetIDEnderecosService";
+import { GetIDEnderecosService } from "../../services/enderecos/GetIDEnderecosService";
 
 class GetIDEnderecosController {
   async handle(req: Request, res: Response) {

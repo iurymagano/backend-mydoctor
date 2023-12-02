@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UpdateProfissionalService } from "../../services/Profissional/UpdateProfissionalService";
+import { UpdateProfissionalService } from "../../services/profissional/UpdateProfissionalService";
 
 class UpdateProfissionalController {
   async handle(req: Request, res: Response) {
@@ -7,6 +7,7 @@ class UpdateProfissionalController {
       id,
       nome,
       email,
+      image,
       telefone,
       endereco_id,
       documento,
@@ -25,6 +26,7 @@ class UpdateProfissionalController {
       documento,
       usuario_id,
       typeProfissional_id,
+      image,
     });
 
     return res.json(list);

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateMensagensService } from "../../services/Mensagens/CreateMensagensService";
+import { CreateMensagensService } from "../../services/mensagens/CreateMensagensService";
 
 class CreateMensagensController {
   async handle(req: Request, res: Response) {

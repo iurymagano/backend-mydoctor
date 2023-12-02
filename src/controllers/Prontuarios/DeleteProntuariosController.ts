@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { DeleteProntuariosService } from "../../services/Prontuarios/DeleteProntuariosService";
+import { DeleteProntuariosService } from "../../services/prontuarios/DeleteProntuariosService";
 
 class DeleteProntuariosController {
   async handle(req: Request, res: Response) {
