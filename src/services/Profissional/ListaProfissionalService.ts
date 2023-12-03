@@ -6,7 +6,7 @@ interface ListaProfissionalRequest {
 }
 
 class ListaProfissionalService {
-  async execute({ skip, take }) {
+  async execute({ skip, take }: ListaProfissionalRequest) {
     const defSkip = Number(skip) || 1;
     const defTake = Number(take) || 10;
 
