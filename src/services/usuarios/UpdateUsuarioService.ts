@@ -47,9 +47,7 @@ class UpdateUsuarioService {
       data,
       select: {
         id: true,
-        image: true,
         email: true,
-        nome: true,
         typeUser: true,
         [typeTable]: true,
       },
@@ -71,10 +69,7 @@ class UpdateUsuarioService {
       },
       data,
     });
-    console.log(respUpdateUsuarios);
     return respUpdateUsuarios;
-
-    // console.log(respUpdate);
   }
 }
 
