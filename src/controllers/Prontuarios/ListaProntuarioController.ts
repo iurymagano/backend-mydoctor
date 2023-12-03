@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ListaProntuariosService } from "../../services/prontuarios/ListaProntuariosService";
 
-class ListaProfissionalController {
+class ListaProntuarioController {
   async handle(req: Request, res: Response) {
     const body = req.body;
 
@@ -13,4 +13,4 @@ class ListaProfissionalController {
   }
 }
 
-export { ListaProfissionalController };
+export { ListaProntuarioController };

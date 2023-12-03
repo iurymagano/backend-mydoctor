@@ -30,6 +30,10 @@ class UpdatePacientesService {
       endereco_id,
     };
 
+    if (!id) {
+      throw new Error('Not found key id')
+    }
+
     const data = {};
 
     Object.keys(keys).forEach((key) => {

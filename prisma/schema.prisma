@@ -47,7 +47,8 @@ model Profissional {
   usuario_id Int
   mensagens  Mensagens[]
 
-  conProfissionalPacientes ConProfissionalPacientes[]
+  conProfissionalPacientes  ConProfissionalPacientes[]
+  LikesPacienteProfissional LikesPacienteProfissional[]
 }
 
 model TypeProfissional {
@@ -74,10 +75,11 @@ model Pacientes {
 
   enderecos Enderecos? @relation(fields: [endereco_id], references: [id])
 
-  conProfissionalPacientes ConProfissionalPacientes[]
-  created_at               DateTime?                  @default(now())
-  updated_at               DateTime?                  @default(now())
-  Mensagens                Mensagens[]
+  conProfissionalPacientes  ConProfissionalPacientes[]
+  created_at                DateTime?                   @default(now())
+  updated_at                DateTime?                   @default(now())
+  Mensagens                 Mensagens[]
+  LikesPacienteProfissional LikesPacienteProfissional[]
 }
 
 model ConProfissionalPacientes {
@@ -133,4 +135,12 @@ model Mensagens {
   usuarioID       Int
   created_at      DateTime?    @default(now())
   updated_at      DateTime?    @default(now())
+}
+
+model LikesPacienteProfissional {
+  id              Int          @id @default(autoincrement())
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  pacientes       Pacientes    @relation(fields: [paciente_id], references: [id])
+  profissional_id Int
+  paciente_id     Int
 }
