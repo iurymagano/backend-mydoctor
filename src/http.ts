@@ -25,7 +25,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 const serverHttp = http.createServer(app);
 const io = new Server(serverHttp, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });

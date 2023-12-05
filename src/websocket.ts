@@ -14,9 +14,9 @@ io.on("connection", (socket) => {
         created_at: "asc",
       },
     });
+    callback(messages);
     console.log(messages);
     mensagen.push([...messages]);
-    callback(messages);
     socket.emit("message", {
       mensagen,
     });
