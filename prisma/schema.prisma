@@ -49,6 +49,9 @@ model Profissional {
 
   conProfissionalPacientes  ConProfissionalPacientes[]
   LikesPacienteProfissional LikesPacienteProfissional[]
+  AgendaProfissional        AgendaProfissional[]
+  Comentarios               Comentarios[]
+  AgendaPacientes           AgendaPacientes[]
 }
 
 model TypeProfissional {
@@ -80,6 +83,8 @@ model Pacientes {
   updated_at                DateTime?                   @default(now())
   Mensagens                 Mensagens[]
   LikesPacienteProfissional LikesPacienteProfissional[]
+  Comentarios               Comentarios[]
+  AgendaPacientes           AgendaPacientes[]
 }
 
 model ConProfissionalPacientes {
@@ -143,4 +148,68 @@ model LikesPacienteProfissional {
   pacientes       Pacientes    @relation(fields: [paciente_id], references: [id])
   profissional_id Int
   paciente_id     Int
+  created_at      DateTime?    @default(now())
+  updated_at      DateTime?    @default(now())
+}
+
+model Dias {
+  id                 Int                  @id @default(autoincrement())
+  segunda            Boolean
+  terca              Boolean
+  quarta             Boolean
+  quinta             Boolean
+  sexta              Boolean
+  sabado             Boolean
+  domingo            Boolean
+  created_at         DateTime?            @default(now())
+  updated_at         DateTime?            @default(now())
+  AgendaProfissional AgendaProfissional[]
+}
+
+model Horarios {
+  id                    Int                @id @default(autoincrement())
+  horario               DateTime
+  agendaprofissional    AgendaProfissional @relation(fields: [agendaprofissional_id], references: [id])
+  agendaprofissional_id Int
+  created_at            DateTime?          @default(now())
+  updated_at            DateTime?          @default(now())
+  AgendaPacientes       AgendaPacientes[]
+}
+
+model AgendaProfissional {
+  id              Int          @id @default(autoincrement())
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  profissional_id Int
+  dia             Dias         @relation(fields: [dia_id], references: [id])
+  dia_id          Int
+  created_at      DateTime?    @default(now())
+  updated_at      DateTime?    @default(now())
+  Horarios        Horarios[]
+}
+
+model AgendaPacientes {
+  id              Int          @id @default(autoincrement())
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  profissional_id Int
+  paciente        Pacientes    @relation(fields: [paciente_id], references: [id])
+  paciente_id     Int
+  date            DateTime
+  diaSemana       String
+  created_at      DateTime?    @default(now())
+  updated_at      DateTime?    @default(now())
+
+  Horarios   Horarios? @relation(fields: [horario_id], references: [id])
+  horario_id Int?
+}
+
+model Comentarios {
+  id              Int          @id @default(autoincrement())
+  comentario      String
+  pacientes       Pacientes    @relation(fields: [paciente_id], references: [id])
+  paciente_id     Int
+  profissional    Profissional @relation(fields: [profissional_id], references: [id])
+  profissional_id Int
+  nota            Int
+  created_at      DateTime?    @default(now())
+  updated_at      DateTime?    @default(now())
 }

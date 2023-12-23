@@ -22,6 +22,7 @@ import { GetIDEnderecosController } from "./controllers/enderecos/GetIDEnderecos
 import { CreateMensagensController } from "./controllers/mensagens/CreateMensagensController";
 import { SendEmailController } from "./controllers/sendEmailController/SendEmailController";
 import { UploadCloudinaryController } from "./controllers/uploadCloudinary/UploadCloudinaryController";
+import { CreateAgendaProfissionalController } from "./controllers/agendaProfissional/agendaProfissionalController";
 
 const router = Router();
 
@@ -130,6 +131,14 @@ router.post(
 
 /**------ SendEmail ------- */
 router.post("/sendemail", isAuthenticated, new SendEmailController().handle);
+
+/**------ AgendaProfissional ------- */
+
+router.post(
+  "/agendaprofissional",
+  isAuthenticated,
+  new CreateAgendaProfissionalController().handle
+);
 
 /**------ Upload Images ------- */
 router.post(
