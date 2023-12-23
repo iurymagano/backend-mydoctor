@@ -23,12 +23,20 @@ import { CreateMensagensController } from "./controllers/mensagens/CreateMensage
 import { SendEmailController } from "./controllers/sendEmailController/SendEmailController";
 import { UploadCloudinaryController } from "./controllers/uploadCloudinary/UploadCloudinaryController";
 import { CreateAgendaProfissionalController } from "./controllers/agendaProfissional/agendaProfissionalController";
+import { SendEmailNewPassController } from "./controllers/sendEmailController/SendEmailNewPassController";
+import { isAuthChangePass } from "./middlewares/IsAuthChangePass";
+import { ChangePasswordController } from "./controllers/usuarios/ChangePasswordController";
 
 const router = Router();
 
 /**------ Usuarios ------- */
 router.post("/usuario", new CreateUsuarioController().handle);
 router.put("/usuario", isAuthenticated, new UpdateUsuarioControler().handle);
+router.post(
+  "/newpass",
+  isAuthChangePass,
+  new ChangePasswordController().handle
+);
 
 /**------ login ------- */
 router.post("/login", new AuthController().handle);
@@ -131,6 +139,8 @@ router.post(
 
 /**------ SendEmail ------- */
 router.post("/sendemail", isAuthenticated, new SendEmailController().handle);
+
+router.post("/sendchangepass", new SendEmailNewPassController().handle);
 
 /**------ AgendaProfissional ------- */
 

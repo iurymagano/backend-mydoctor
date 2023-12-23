@@ -2,6 +2,7 @@ import prismaClient from "../../prisma";
 import { hash } from "bcryptjs";
 import { CreatePacientesService } from "../pacientes/CreatePacientesService";
 import { CreateProfissionalService } from "../profissional/CreateProfissionalService";
+import { SendEmailService } from "../sendEmail/SendEmailService";
 
 interface UserRequest {
   nome: string;
@@ -69,6 +70,13 @@ class CreateUsuarioService {
         usuario_id: user.id,
       });
     }
+
+    new SendEmailService().execute({
+      body: { nome },
+      to: email,
+      subject: "Bem-Vindo ao Mydoctor",
+      type: `newuser_${typeUser}`,
+    });
 
     return { respData: user };
   }

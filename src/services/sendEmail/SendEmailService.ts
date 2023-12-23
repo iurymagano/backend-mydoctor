@@ -23,7 +23,6 @@ class SendEmailService {
       subject,
       html: templatesEmail({ type, body }),
     });
-
     return { respData: "Email enviado com sucesso." };
   }
 }
