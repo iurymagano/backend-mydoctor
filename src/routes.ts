@@ -140,7 +140,7 @@ router.post(
   new CreateAgendaProfissionalController().handle
 );
 
-/**------ Upload Images ------- */
+/**------ Upload Images -------- */
 router.post(
   "/images/upload",
   isAuthenticated,
