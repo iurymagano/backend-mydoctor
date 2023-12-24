@@ -1,6 +1,5 @@
 import { templatesEmail } from "../../utils/templatesEmail";
-
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 interface SendEmailRequest {
   to: string;
