@@ -5,10 +5,10 @@ class UploadCloudinaryController {
   async handle(req: Request, res: Response) {
     const { file } = req;
     const { publicID } = req.body;
-    console.log(file);
+
     const uploadService = new UploadCloudinaryService();
     const upload = await uploadService.execute({
-      file,
+      fileBuffer: file.buffer,
       publicID,
     });
 

@@ -1,37 +1,34 @@
 import { cloudinary } from "../../utils/cloudinary";
-import fs from "fs";
+import { Stream } from "stream";
 
 interface UploadCloudinaryRequest {
-  file: any;
+  fileBuffer: Buffer;
   publicID?: string;
 }
 
 class UploadCloudinaryService {
-  async execute({ file, publicID }: UploadCloudinaryRequest) {
-    console.log(file, "testeeeeee file");
-    if (!file) {
+  async execute({ fileBuffer, publicID }: UploadCloudinaryRequest) {
+    if (!fileBuffer || fileBuffer.length === 0) {
       throw new Error("File não existente");
     }
-    const image = file.path;
 
-    const result = await cloudinary.uploader.upload(image, {
-      public_id: publicID,
+    const bufferStream = new Stream.PassThrough();
+    bufferStream.end(fileBuffer);
+
+    const result = await new Promise((resolve, reject) => {
+      bufferStream.pipe(
+        cloudinary.uploader.upload_stream(
+          { public_id: publicID },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        )
+      );
     });
-    if (!result) {
-      throw new Error("Não foi possível realizar o upload da image.");
-    }
-
-    const resp = fs.promises
-      .unlink(image)
-      .then(() => {
-        console.log("Arquivo excluído com sucesso.");
-      })
-      .catch((err) => {
-        console.error("Erro ao excluir o arquivo:", err);
-      });
-
-    // Aguarde a execução da promise antes de retornar
-    await resp;
 
     return result;
   }
