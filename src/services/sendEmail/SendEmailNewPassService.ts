@@ -45,7 +45,7 @@ class SendEmailNewPassService {
       token,
     };
 
-    const respSend = new SendEmailService().execute({
+    const respSend = await new SendEmailService().execute({
       body,
       type: "sendchangepass",
       to: email,

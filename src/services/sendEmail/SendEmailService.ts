@@ -9,7 +9,7 @@ interface SendEmailRequest {
 }
 
 class SendEmailService {
-  execute({ to, subject, type, body }: SendEmailRequest) {
+  async execute({ to, subject, type, body }: SendEmailRequest) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -17,12 +17,18 @@ class SendEmailService {
         pass: process.env.MAIL_PASS,
       },
     });
-    transporter.sendMail({
-      to,
-      subject,
-      html: templatesEmail({ type, body }),
-    });
-    return { respData: "Email enviado com sucesso." };
+
+    try {
+      await transporter.sendMail({
+        to,
+        subject,
+        html: templatesEmail({ type, body }),
+      });
+      return { respData: "Email enviado com sucesso. -" };
+    } catch (error) {
+      console.error("Erro ao enviar o e-mail:", error);
+      throw new Error("Erro ao enviar o e-mail");
+    }
   }
 }
 
