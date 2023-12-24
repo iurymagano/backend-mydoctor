@@ -8,6 +8,7 @@ interface UploadCloudinaryRequest {
 
 class UploadCloudinaryService {
   async execute({ file, publicID }: UploadCloudinaryRequest) {
+    console.log(file, "testeeeeee file");
     if (!file) {
       throw new Error("File não existente");
     }
@@ -20,11 +21,17 @@ class UploadCloudinaryService {
       throw new Error("Não foi possível realizar o upload da image.");
     }
 
-    fs.unlink(image, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    const resp = fs.promises
+      .unlink(image)
+      .then(() => {
+        console.log("Arquivo excluído com sucesso.");
+      })
+      .catch((err) => {
+        console.error("Erro ao excluir o arquivo:", err);
+      });
+
+    // Aguarde a execução da promise antes de retornar
+    await resp;
 
     return result;
   }
