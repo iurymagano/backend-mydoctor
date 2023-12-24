@@ -71,14 +71,14 @@ class CreateUsuarioService {
       });
     }
 
-    new SendEmailService().execute({
+    const resp = await new SendEmailService().execute({
       body: { nome },
       to: email,
       subject: "Bem-Vindo ao Mydoctor",
       type: `newuser_${typeUser}`,
     });
 
-    return { respData: user };
+    return { respData: user, email: resp };
   }
 }
 

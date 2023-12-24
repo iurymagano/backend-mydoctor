@@ -26,8 +26,7 @@ class SendEmailService {
       });
       return { respData: "Email enviado com sucesso. -" };
     } catch (error) {
-      console.error("Erro ao enviar o e-mail:", error);
-      throw new Error("Erro ao enviar o e-mail");
+      return { error: error, result: "Falha no envio do email" };
     }
   }
 }
